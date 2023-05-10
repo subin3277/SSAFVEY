@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -35,12 +36,17 @@ public class JwtFilter extends GenericFilterBean {
       HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
       String jwt = resolveToken(httpServletRequest);
       String requestURI = httpServletRequest.getRequestURI();
+
       log.info("====================================================");
       log.info("요청 IP ADDRESS : {}", servletRequest.getRemoteAddr());
       log.info("요청 URI : {}", requestURI);
       if (StringUtils.hasText(jwt)){
          if(tokenProvider.validateToken(jwt)){ // 토큰이 유효하다면
             Authentication authentication = tokenProvider.getAuthentication(jwt); // Authentication 객체(권한 정보들)를 가져온다.
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+            Long memberId = (long) Integer.parseInt(username);
+            servletRequest.setAttribute("memberId", memberId);
             SecurityContextHolder.getContext().setAuthentication(authentication); // SecurityContext에 set한다.
             logger.info("MEMBER ADDRESS IN TOKEN : '{}'", authentication.getName());
             logger.info("JWT 토큰이 유효합니다.");

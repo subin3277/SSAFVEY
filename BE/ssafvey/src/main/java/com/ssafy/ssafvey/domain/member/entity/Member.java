@@ -63,8 +63,8 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
-    @Value("0")
-    private Long point;
+    @Column(columnDefinition = "int default 0")
+    private int point;
 
 
     @ManyToMany

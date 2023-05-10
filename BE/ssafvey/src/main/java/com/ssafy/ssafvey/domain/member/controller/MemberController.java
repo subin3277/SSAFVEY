@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -79,7 +80,7 @@ public class MemberController {
     })
     @PutMapping("/api/member/changeProfil")
     public ResponseEntity updateUser(HttpServletRequest request, @RequestBody SignUpRequestDto signUpRequestDto ) {
-        memberService.updateUser(memberService.getMemberId(request),signUpRequestDto);
+        memberService.updateUser((Long) request.getAttribute("memberId"),signUpRequestDto);
 
         return ResponseEntity.status(HttpStatus.OK).body("저장 완료");
     }
@@ -112,7 +113,7 @@ public class MemberController {
     })
     @GetMapping("/api/member/mypage")
     public ResponseEntity getMypage(HttpServletRequest request) {
-        MypageResponseDto mypageResponseDto = memberService.getMypage(memberService.getMemberId(request));
+        MypageResponseDto mypageResponseDto = memberService.getMypage((Long) request.getAttribute("memberId"));
 
         return ResponseEntity.status(HttpStatus.OK).body(mypageResponseDto);
     }
@@ -125,7 +126,7 @@ public class MemberController {
     })
     @GetMapping("/api/member/mypage/surveyParticipated")
     public ResponseEntity getParticipated(HttpServletRequest request) {
-        Map<String, List<RecentItem>> surveysResponseDto = memberService.getSurveyParticipated(memberService.getMemberId(request));
+        Map<String, List<RecentItem>> surveysResponseDto = memberService.getSurveyParticipated((Long) request.getAttribute("memberId"));
 
         return ResponseEntity.status(HttpStatus.OK).body(surveysResponseDto);
     }
@@ -138,10 +139,39 @@ public class MemberController {
     })
     @GetMapping("/api/member/mypage/surveyCreated")
     public ResponseEntity getCreated(HttpServletRequest request) {
-        Map<String, List<RecentItem>> surveysResponseDto = memberService.getSurveyCreated(memberService.getMemberId(request));
+        Map<String, List<RecentItem>> surveysResponseDto = memberService.getSurveyCreated((Long) request.getAttribute("memberId"));
 
         return ResponseEntity.status(HttpStatus.OK).body(surveysResponseDto);
     }
+
+    //TODO 이건 꼭 지울 것
+    @ApiOperation(value="tmp 엑세스토큰", notes = "유저 정보를 업데이트 합니다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK(회원 가입 성공)"),
+            @ApiResponse(code = 400, message = "BAD REQUEST(요청 실패)"),
+            @ApiResponse(code = 500, message = "서버에러")
+    })
+    @GetMapping("/api/member/tmpToken")
+    public ResponseEntity tmpToken(@RequestParam Long id) {
+
+        Map<String, Object> token = memberService.tmpAccessToken(id);
+        return ResponseEntity.status(HttpStatus.OK).body(token);
+    }
+
+    
+    @ApiOperation(value="로또 뜯기", notes = "유저 정보를 업데이트 합니다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK(회원 가입 성공)"),
+            @ApiResponse(code = 400, message = "BAD REQUEST(요청 실패)"),
+            @ApiResponse(code = 500, message = "서버에러")
+    })
+    @PutMapping("/api/member/mypage/lotto")
+    public ResponseEntity useLotto(HttpServletRequest request) {
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(memberService.getPoint((Long) request.getAttribute("memberId")));
+    }
+
 
     public HttpHeaders returnTokenHeader(Map<String, Object> result) {
         //  HTTP 요청 헤더에 액세스 토큰과 리프레시 토큰을 추가하여 인증에 필요한 정보를 제공

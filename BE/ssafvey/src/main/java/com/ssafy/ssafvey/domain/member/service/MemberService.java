@@ -25,4 +25,8 @@ public interface MemberService {
     Map<String, List<RecentItem>> getSurveyParticipated(Long id);
 
     Map<String, List<RecentItem>> getSurveyCreated(Long id);
+
+    int getPoint(Long id);
+
+    Map<String,Object> tmpAccessToken(Long id);
 }

@@ -78,7 +78,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests() // HttpServletRequest를 사용하는 요청들에 대한 접근 제한을 설정하겠다는 의미
                 .antMatchers("/authenticate","/v2/api-docs/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
-                .antMatchers("/api/member/login**","/api/member/refresh","/api/survey/list**","/api/survey/start/**","/api/member/jobs","/api/shop/items/**").permitAll()
+                .antMatchers("/api/member/login**","/api/member/refresh","/api/survey/list**","/api/survey/start/**","/api/member/jobs","/api/shop/items/**","/api/member/tmpToken").permitAll()
                 // 인증된 사용자만 접근
                 .antMatchers("/api/**").authenticated()
                 // 누구나 접근 가능하도록 설정

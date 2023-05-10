@@ -11,7 +11,6 @@ import java.util.List;
 @Entity
 @Table
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
@@ -38,6 +37,14 @@ public class SurveyQuestion {
     @OneToMany(mappedBy = "surveyQuestion")
     private List<MemberAnswerDescriptive> memberAnswerDescriptives = new ArrayList<>();
 
+    public void setSurveyQuestionChoices(List<SurveyQuestionChoice> surveyQuestionChoices) {
+        this.surveyQuestionChoices = surveyQuestionChoices;
+    }
+
     @OneToMany(mappedBy = "surveyQuestion")
     private List<SurveyQuestionChoice> surveyQuestionChoices = new ArrayList<>();
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
+    }
 }
