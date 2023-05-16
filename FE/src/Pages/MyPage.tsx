@@ -13,6 +13,7 @@ import { useTokenQuery } from '@/hooks/useTokenQuery';
 interface survey {
   title: string;
   name: string;
+  id?: number;
 }
 
 interface myinfo {
@@ -255,12 +256,22 @@ export default function MyPage() {
           </div>
           <div className={styles.recentActivityWrapper}>
             {activityData?.map((activity, idx) => (
-              // 데이터를 나타내는 것이 중요하기에,
-              // eslint-disable-next-line react/no-array-index-key
-              <div key={idx} className={styles.recentActivityBg}>
-                <div className={styles.title}>{activity.title}</div>
-                <div className={styles.author}>{activity.name}</div>
-              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  navigate(`/survey/${activity.id}`);
+                }}
+              >
+                <div
+                  // 데이터를 나타내는 것이 중요하기에,
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={idx}
+                  className={styles.recentActivityBg}
+                >
+                  <div className={styles.title}>{activity.title}</div>
+                  <div className={styles.author}>{activity.name}</div>
+                </div>
+              </button>
             ))}
           </div>
         </article>
