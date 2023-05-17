@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://k8a608.p.ssafy.io:3306/ssafveydb?useSSL=true&serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: SSAFVEY_6god
+    url: jdbc:mysql://localhost:3306/ssafvey?useSSL=true&serverTimezone=UTC&characterEncoding=UTF-8
+    username: ssafvey_user
+    password: ssafssaf12
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect

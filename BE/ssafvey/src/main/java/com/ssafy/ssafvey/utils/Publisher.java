@@ -11,14 +11,14 @@ public class Publisher {
     private final RabbitTemplate rabbitTemplate;
 
     public void send(Object message) {
-        rabbitTemplate.convertAndSend("hello",message);
+        rabbitTemplate.convertAndSend("my",message);
     }
 
     public void sendId(Long id) {
         MQSendSurveyDto mqSendSurveyDto = new MQSendSurveyDto();
         mqSendSurveyDto.setId(id);
 
-        rabbitTemplate.convertAndSend("myqueue", mqSendSurveyDto);
+        rabbitTemplate.convertAndSend("my-queue", mqSendSurveyDto);
     }
 
 }

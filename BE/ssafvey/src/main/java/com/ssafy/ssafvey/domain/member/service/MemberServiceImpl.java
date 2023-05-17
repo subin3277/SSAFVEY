@@ -152,8 +152,8 @@ public class MemberServiceImpl implements MemberService {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=08464b27e8d442e6bde11f4a08656b53"); // TODO REST_API_KEY 입력
-//            sb.append("&redirect_uri=http://localhost:5173/onlylogin"); // TODO 인가코드 받은 redirect_uri 입력
-            sb.append("&redirect_uri=https://k8a608.p.ssafy.io/onlylogin"); // TODO 인가코드 받은 redirect_uri 입력
+            sb.append("&redirect_uri=http://localhost:5173/onlylogin"); // TODO 인가코드 받은 redirect_uri 입력
+//            sb.append("&redirect_uri=https://k8a608.p.ssafy.io/onlylogin"); // TODO 인가코드 받은 redirect_uri 입력
             sb.append("&code=" + code);
             bw.write(sb.toString());
             bw.flush();

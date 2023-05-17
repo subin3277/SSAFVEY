@@ -241,11 +241,11 @@ public class SurveyService {
         Member findMember = memberRepository.findById(memberId).get();
         if (optionalSurvey.isPresent()) {
             Survey survey = optionalSurvey.get();
+            survey.surveyParticipate();
             String UUID = UUIDGenerator.generateUUID();
             List<SurveyQuestion> sortedSurveyQuestionList = getSortedSurveyQuestionListFromSurvey(survey);
             List<SurveyAnswerDto> sortedSurveyAnswerDto = getSortedSurveyAnswerDtos(surveyAnswersDto);
 
-            survey.surveyParticipate();
             MemberSurvey memberSurvey=memberSurveyService.createMemberSurvey(memberId, survey, false);
             memberSurveyRepository.save(memberSurvey);
             findMember.setCouponCount(findMember.getCouponCount()+1);
@@ -261,9 +261,8 @@ public class SurveyService {
                 }
             }
             if (survey.isFull()) {
-                System.out.println(123123);
                 survey.setDone(Boolean.TRUE);
-//                publisher.sendId(survey.getId());
+                publisher.sendId(survey.getId());
             }
         }
     }
