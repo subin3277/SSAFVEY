@@ -81,7 +81,8 @@ function SurveyBtnWrapepr({
 function StartButton({ isAuthor, haveDone, isDone }: { isAuthor: boolean; haveDone: boolean; isDone: boolean }) {
   const navigate = useNavigate();
 
-  const isDisabled = isAuthor || haveDone || isDone;
+  // const isDisabled = isAuthor || haveDone || isDone;
+  const isDisabled = false;
 
   const styleClass = isDisabled ? style.cantSurveyBtn : style.startSurveyBtn;
 
@@ -93,14 +94,14 @@ function StartButton({ isAuthor, haveDone, isDone }: { isAuthor: boolean; haveDo
   };
 
   const handleClick = () => {
-    if (isDone) return;
-    if (isAuthor) return;
-    if (haveDone) return;
+    // if (isDone) return;
+    // if (isAuthor) return;
+    // if (haveDone) return;
     navigate('doing');
   };
 
   return (
-    <button type="button" className={styleClass} disabled={isDisabled} onClick={handleClick}>
+    <button type="button" className={styleClass} onClick={handleClick}>
       {getText()}
     </button>
   );

@@ -5,12 +5,12 @@ import path from 'path';
 import comporession from 'vite-plugin-compression2';
 
 export default defineConfig({
-  esbuild: {
-    drop: ['console', 'debugger'],
-    supported: {
-      'top-level-await': true,
-    },
-  },
+  // esbuild: {
+  //   // drop: ['console', 'debugger'],
+  //   supported: {
+  //     'top-level-await': true,
+  //   },
+  // },
   plugins: [
     react(),
     VitePWA(),

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { SurveyPostRequestData, SurveyQuestionData, Answer } from '@/types/surveyType';
 import { go, map } from '@/module/fx';
 import { postAnswer } from '@/Api/survey';
+import { answersState } from '@/Store/Create/atom';
 
 export interface AnswerObj {
   [id: number]: number | string;
@@ -21,13 +22,15 @@ export const useSurveyQuestionDataParser = (
 
   const [answerStateObj, setAnswerStateObj] = useState(answerObj);
 
+  console.log(answerStateObj);
+
   const submitAnswer = async (token: string) => {
     const requestData: SurveyPostRequestData = {
       surveyId: id,
       answers: [],
     };
     const answers: Answer[] = go(
-      Object.entries(answerObj),
+      Object.entries(answerStateObj),
       map(([key, value]: [number, string | number]) => {
         let answer: Answer = {
           order: Number(key),
@@ -51,7 +54,7 @@ export const useSurveyQuestionDataParser = (
       }),
     );
     requestData.answers = answers;
-
+    console.log(requestData);
     const res = await postAnswer(requestData, token);
   };
 
